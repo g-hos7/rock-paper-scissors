@@ -1,10 +1,10 @@
-# Project Title
+# Rock Paper Scissors
 
 Play Rock Paper Scissors in your browser!
 
-## Authors
+## Author
 
-* **Tim Barnes** - *Initial work* - [timcbarnes](https://github.com/timcbarnes)
+* **Tim Barnes** - [timcbarnes](https://github.com/timcbarnes)
 
 ## Acknowledgments
 
