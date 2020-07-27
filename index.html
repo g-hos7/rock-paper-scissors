@@ -10,6 +10,109 @@
     </head>
 
     <body>
+        <script>
+            function getRandomNum() {
+                return Math.floor(Math.random() * (3 - 1 +1)) + 1;
+            }
+
+            function computerPlay() {
+                let randomMove = getRandomNum();
+                if(randomMove === 1) {
+                    randomMove = "rock";
+                } else if(randomMove === 2) {
+                    randomMove = "paper";
+                } else {
+                    randomMove = "scissors"
+                }
+                return randomMove;
+            }
+
+            function getPlayerMove() {
+                let playerMove = prompt("Choose Your Move").toLowerCase();
+                return playerMove;
+            }
+
+            function playRound(playerSelection, computerSelection) {
+                let playerWin = false;
+
+                switch(true) {
+                    case playerSelection === computerSelection:
+                        playerWin = false;
+                        break;
+                    case playerSelection === "rock":
+                        switch(true) {
+                            case computerSelection === "paper":
+                                playerWin = false;
+                                break;
+                            case computerSelection === "scissors":
+                                playerWin = true;
+                                break;
+                        }
+                    case playerSelection === "paper":
+                        switch(true) {
+                            case computerSelection === "rock":
+                                playerWin = true;
+                                break;
+                            case computerSelection === "scissors":
+                                playerWin = false;
+                                break;
+                        }
+                    case playerSelection === "scissors":
+                        switch(true) {
+                            case computerSelection === "rock":
+                                playerWin = false;
+                                break;
+                            case computerSelection === "paper":
+                                playerWin = true;
+                                break;
+                        }
+                    default:
+                        playerWin = false;
+                }
+                return playerWin;
+            }
+
+            function playerWon(playerMove, computerMove, playerScore) {
+                console.log(`You Win! ${playerMove} beats ${computerMove}`);
+                playerScore++;
+                return playerScore;
+            }
+
+            function playerLost(playerMove, computerMove, computerScore) {
+                console.log(`You Lose! ${computerMove} beats ${playerMove}`);
+                computerScore++;
+                return computerScore;
+            }
+
+            function determineWinner(playerScore, computerScore) {
+                if(playerScore === computerScore) {
+                    console.log("Tie Game!");
+                } else if(playerScore > computerScore) {
+                    console.log("Player Wins!");
+                } else {
+                    console.log("Computer Wins!");
+                }
+            }
+
+            function game() {
+                let playerScore = 0;
+                let computerScore = 0;
+
+                for(i = 0; i <= 4; i++) {
+                    let playerWin = playRound(getPlayerMove(), computerPlay());
+                    if(playerWin) {
+                        playerWon(getPlayerMove(), computerPlay(), playerScore);
+                    }
+
+                    if(!playerWin) {
+                        playerLost(getPlayerMove(), computerPlay(), computerScore);
+                    }
+                }
+                determineWinner(playerScore, computerScore);
+            }
+            game();
+            
+        </script>
 
     </body>
 </html>
