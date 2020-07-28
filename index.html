@@ -15,102 +15,141 @@
                 return Math.floor(Math.random() * (3 - 1 +1)) + 1;
             }
 
-            function computerPlay() {
+            function getComputerSelection() {
                 let randomMove = getRandomNum();
-                if(randomMove === 1) {
+                if (randomMove === 1) {
                     randomMove = "rock";
-                } else if(randomMove === 2) {
+                    return randomMove;
+                } else if (randomMove === 2) {
                     randomMove = "paper";
+                    return randomMove;
                 } else {
-                    randomMove = "scissors"
+                    randomMove = "scissors";
+                    return randomMove;
                 }
-                return randomMove;
             }
 
-            function getPlayerMove() {
-                let playerMove = prompt("Choose Your Move").toLowerCase();
+            function getPlayerSelection() {
+                let playerMove = prompt("Choose rock, paper or scissors").toLowerCase();
                 return playerMove;
             }
 
-            function playRound(playerSelection, computerSelection) {
-                let playerWin = false;
+            function getRoundResult(playerSelection, computerSelection) {
+                let roundResult = ""
 
-                switch(true) {
-                    case playerSelection === computerSelection:
-                        playerWin = false;
-                        break;
-                    case playerSelection === "rock":
-                        switch(true) {
-                            case computerSelection === "paper":
-                                playerWin = false;
-                                break;
-                            case computerSelection === "scissors":
-                                playerWin = true;
-                                break;
-                        }
-                    case playerSelection === "paper":
-                        switch(true) {
-                            case computerSelection === "rock":
-                                playerWin = true;
-                                break;
-                            case computerSelection === "scissors":
-                                playerWin = false;
-                                break;
-                        }
-                    case playerSelection === "scissors":
-                        switch(true) {
-                            case computerSelection === "rock":
-                                playerWin = false;
-                                break;
-                            case computerSelection === "paper":
-                                playerWin = true;
-                                break;
-                        }
-                    default:
-                        playerWin = false;
+                if (playerSelection === computerSelection) {
+                    roundResult = "tie";
+                    return roundResult;
+                } else if (playerSelection === "rock") {
+                    if (computerSelection === "paper") {
+                        roundResult = "loss";
+                        return roundResult;
+                    } else if (computerSelection === "scissors") {
+                        roundResult = "win";
+                        return roundResult;
+                    }
+                } else if (playerSelection === "paper") {
+                    if (computerSelection === "rock") {
+                        roundResult = "win";
+                        return roundResult;
+                    } else if (computerSelection === "scissors") {
+                        roundResult = "loss";
+                        return roundResult;
+                    }
+                } else if (playerSelection === "scissors") {
+                    if (computerSelection === "rock") {
+                        roundResult = "loss";
+                        return roundResult;
+                    } else if (computerSelection === "paper") {
+                        roundResult = "win";
+                        return roundResult;
+                    }
                 }
-                return playerWin;
             }
 
-            function playerWon(playerMove, computerMove, playerScore) {
-                console.log(`You Win! ${playerMove} beats ${computerMove}`);
-                playerScore++;
-                return playerScore;
+            function showRoundWin(playerMove, computerMove) {
+                console.log(`You win this round! ${playerMove} beats ${computerMove}`);
             }
 
-            function playerLost(playerMove, computerMove, computerScore) {
-                console.log(`You Lose! ${computerMove} beats ${playerMove}`);
-                computerScore++;
-                return computerScore;
+            function showRoundLoss(playerMove, computerMove) {
+                console.log(`You lose this round! ${computerMove} beats ${playerMove}`);
             }
 
-            function determineWinner(playerScore, computerScore) {
-                if(playerScore === computerScore) {
-                    console.log("Tie Game!");
-                } else if(playerScore > computerScore) {
-                    console.log("Player Wins!");
+            function showRoundTie(playerMove) {
+                console.log(`It's a tie! You both choose ${playerMove}`);
+            }
+
+            function showInvalidMessage() {
+                console.log("Please choose rock, paper or scissors");
+            }
+
+            function showGameTie(playerScore, computerScore) {
+                console.log(`You tied with the computer! You: ${playerScore} | Computer: ${computerScore}`);
+            }
+
+            function showGameWin(playerScore, computerScore) {
+                console.log(`You won the most rounds! You: ${playerScore} | Computer: ${computerScore}`);
+            }
+
+            function showGameLoss(playerScore, computerScore) {
+                console.log(`You lost the most rounds! You: ${playerScore} | Computer: ${computerScore}`);
+            }
+
+            function checkRoundWinner(playerSelection, computerSelection, roundResult) {
+                let winner = "";
+                if (roundResult === "win") {
+                        showRoundWin(playerSelection, computerSelection);
+                        winner = "player";
+                        return winner;
+                    } else if (roundResult === "loss") {
+                        showRoundLoss(playerSelection, computerSelection);
+                        winner = "computer";
+                        return winner;
+                    } else if (roundResult === "tie") {
+                        showRoundTie(playerSelection);
+                        winner = "tie";
+                        return winner;
+                    } else {
+                        showInvalidMessage();
+                    }
+            }
+
+            function checkOverallWinner(playerScore, computerScore) {
+                if (playerScore === computerScore) {
+                    showGameTie(playerScore, computerScore);
+                } else if (playerScore > computerScore) {
+                    showGameWin(playerScore, computerScore);
                 } else {
-                    console.log("Computer Wins!");
+                    showGameLoss(playerScore, computerScore);
                 }
             }
 
-            function game() {
+            function playGame() {
                 let playerScore = 0;
                 let computerScore = 0;
 
-                for(i = 0; i <= 4; i++) {
-                    let playerWin = playRound(getPlayerMove(), computerPlay());
-                    if(playerWin) {
-                        playerWon(getPlayerMove(), computerPlay(), playerScore);
-                    }
-
-                    if(!playerWin) {
-                        playerLost(getPlayerMove(), computerPlay(), computerScore);
+                for (let i = 0; i < 5; i++) {
+                    let playerSelection = getPlayerSelection();
+                    let computerSelection = getComputerSelection();
+                    let roundResult = getRoundResult(playerSelection, computerSelection);
+                    let roundWinner = checkRoundWinner(playerSelection, computerSelection, roundResult);
+                    
+                    if (roundWinner === "player") {
+                        playerScore++;
+                    } else if (roundWinner === "computer") {
+                        computerScore++;
+                    } else if (roundWinner === "tie") {
+                        //tie round, no one scores
+                        continue;
+                    } else {
+                        //invalid user input, repeat the same round until we get valid input
+                        i--;
                     }
                 }
-                determineWinner(playerScore, computerScore);
+                checkOverallWinner(playerScore, computerScore);
             }
-            game();
+
+            playGame();
             
         </script>
 
