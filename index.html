@@ -15,58 +15,54 @@
                 return Math.floor(Math.random() * (3 - 1 +1)) + 1;
             }
 
+            // Use a random number between 1 and 3 to determine a random move
             function getComputerSelection() {
                 let randomMove = getRandomNum();
                 if (randomMove === 1) {
                     randomMove = "rock";
-                    return randomMove;
                 } else if (randomMove === 2) {
                     randomMove = "paper";
-                    return randomMove;
                 } else {
                     randomMove = "scissors";
-                    return randomMove;
                 }
+                return randomMove;
             }
 
+            // Get input from the user
             function getPlayerSelection() {
                 let playerMove = prompt("Choose rock, paper or scissors").toLowerCase();
                 return playerMove;
             }
 
+            // Determine who won a single round
             function getRoundResult(playerSelection, computerSelection) {
                 let roundResult = ""
 
                 if (playerSelection === computerSelection) {
                     roundResult = "tie";
-                    return roundResult;
                 } else if (playerSelection === "rock") {
                     if (computerSelection === "paper") {
                         roundResult = "loss";
-                        return roundResult;
                     } else if (computerSelection === "scissors") {
                         roundResult = "win";
-                        return roundResult;
                     }
                 } else if (playerSelection === "paper") {
                     if (computerSelection === "rock") {
                         roundResult = "win";
-                        return roundResult;
                     } else if (computerSelection === "scissors") {
                         roundResult = "loss";
-                        return roundResult;
                     }
                 } else if (playerSelection === "scissors") {
                     if (computerSelection === "rock") {
                         roundResult = "loss";
-                        return roundResult;
                     } else if (computerSelection === "paper") {
                         roundResult = "win";
-                        return roundResult;
                     }
                 }
+                return roundResult;
             }
 
+            // Simple helper functions to print messages
             function showRoundWin(playerMove, computerMove) {
                 console.log(`You win this round! ${playerMove} beats ${computerMove}`);
             }
@@ -94,26 +90,26 @@
             function showGameLoss(playerScore, computerScore) {
                 console.log(`You lost the most rounds! You: ${playerScore} | Computer: ${computerScore}`);
             }
-
+            
+            // Determine which round result message to disply
             function checkRoundWinner(playerSelection, computerSelection, roundResult) {
                 let winner = "";
                 if (roundResult === "win") {
                         showRoundWin(playerSelection, computerSelection);
                         winner = "player";
-                        return winner;
                     } else if (roundResult === "loss") {
                         showRoundLoss(playerSelection, computerSelection);
                         winner = "computer";
-                        return winner;
                     } else if (roundResult === "tie") {
                         showRoundTie(playerSelection);
                         winner = "tie";
-                        return winner;
                     } else {
                         showInvalidMessage();
                     }
+                    return winner;
             }
 
+            // Determine who had the most wins overall
             function checkOverallWinner(playerScore, computerScore) {
                 if (playerScore === computerScore) {
                     showGameTie(playerScore, computerScore);
@@ -124,6 +120,7 @@
                 }
             }
 
+            // Play a set number of rounds and track wins for each player
             function playGame() {
                 let playerScore = 0;
                 let computerScore = 0;
