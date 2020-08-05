@@ -1,0 +1,86 @@
+html {
+  font-size: 14px;
+}
+
+body,html {
+  margin: 0;
+  padding: 0;
+  font-family: C;
+}
+
+.header {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.header > h1 {
+  margin-top: 2.5rem;
+  padding: 0.8rem;
+  border-style: solid;
+  border-width: 0.15rem;
+  border-radius: 0.9rem;
+  border-color: black;
+  background: rgb(181, 255, 181);
+}
+
+.scoreboard {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.choice {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.buttons {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+button {
+  margin: 2rem;
+  padding: 4rem;
+  border-style: solid;
+  border-width: 0.rem;
+  border-radius: 0.9rem;
+  border-color: black;
+  transition-duration: 0.3s;
+  background-color: white;
+}
+
+button:hover {
+  background-color: rgb(181, 255, 181);
+}
+
+button:focus {
+  outline: none;
+}
+.rock {
+  background: url("/images/rock.png");
+  background-size: 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.paper {
+  background: url("/images/paper.png");
+  background-size: 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.scissors {
+  background: url("/images/scissors.png");
+  background-size: 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
