@@ -82,7 +82,7 @@ button:focus {
 }
 
 .rock {
-  background-image: url("/images/rock.png"), linear-gradient(-10deg, #3f88c5, #44bba4);
+  background-image: url("../images/rock.png"), linear-gradient(-10deg, #3f88c5, #44bba4);
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -93,7 +93,7 @@ button:focus {
 }
 
 .paper {
-  background: url("/images/paper.png"), linear-gradient(0deg, #3f88c5, #44bba4);
+  background: url("../images/paper.png"), linear-gradient(0deg, #3f88c5, #44bba4);
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -105,7 +105,7 @@ button:focus {
 }
 
 .scissors {
-  background: url("/images/scissors.png"), linear-gradient(10deg, #3f88c5, #44bba4);linear-gradient(135deg, #e66465, #9198e5);
+  background: url("../images/scissors.png"), linear-gradient(10deg, #3f88c5, #44bba4);linear-gradient(135deg, #e66465, #9198e5);
   background-position: center;
   background-repeat: no-repeat;
 }
