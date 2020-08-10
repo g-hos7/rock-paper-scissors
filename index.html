@@ -13,12 +13,14 @@
     <div class="header">
       <h1>Rock | Paper | Scissors</h1>
     </div>
+    <div class="result">
+    </div>
     <div class="scoreboard">
-      <p>You: 1</p>
-      <p>Computer: 0</p>
+      <p class="userContainer">You: <span class="playerscore"></span></p>
+      <p class="computerContainer">Computer: <span class="computerscore"></span></p>
+      <p class="drawContainer">Draws: <span class="draws"></span></p>
     </div>
     <div class="choice">
-      <h3>Choose your move</h3>
     </div>
     <div class="buttons">
       <div class="btn">
@@ -32,6 +34,10 @@
       <div class="btn">
         <button name="scissors" class="scissors"></button>
         <span class="label">Scissors</span>
+      </div>
+      <div class="btn">
+        <button name="reload" class="reload"></button>
+        <span class="label">Retry</span>
       </div>
     </div>
   </body>

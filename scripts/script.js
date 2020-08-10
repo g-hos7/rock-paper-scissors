@@ -19,11 +19,6 @@ function getComputerSelection() {
   return randomMove;
 }
 
-function getPlayerSelection() {
-    let userMove = prompt("Choose rock, paper or scissors").toLowerCase();
-    return userMove;
-}
-
 function getRoundResult(playerSelection, computerSelection) {
   let roundResult = ""
 
@@ -51,48 +46,48 @@ function getRoundResult(playerSelection, computerSelection) {
   return roundResult;
 }
 
-function showRoundWin(playerMove, computerMove) {
-  console.log(`You win this round! ${playerMove} beats ${computerMove}`);
+function showRoundWin(playerMove, computerMove, resultMessage) {
+  resultMessage.textContent = `You win this round, ${playerMove} beats ${computerMove}`;
 }
 
-function showRoundLoss(playerMove, computerMove) {
-  console.log(`You lose this round! ${computerMove} beats ${playerMove}`);
+function showRoundLoss(playerMove, computerMove, resultMessage) {
+  resultMessage.textContent = `You lose this round, ${computerMove} beats ${playerMove}`;
 }
 
-function showRoundTie(playerMove) {
-  console.log(`It's a tie! You both choose ${playerMove}`);
+function showRoundTie(playerMove, resultMessage) {
+  resultMessage.textContent = `It's a draw, you both choose ${playerMove}`;
 }
 
 function showInvalidMessage() {
-  console.log("Please choose rock, paper or scissors");
+  console.log("Invalid input received");
 }
 
-function showGameTie(playerScore, computerScore) {
-  console.log(`You tied with the computer! `+
-      `You: ${playerScore} | Computer: ${computerScore}`);
+function showGameTie(playerScore, computerScore, message) {
+  message.textContent = `You tied with the computer! `+
+      `You: ${playerScore} | Computer: ${computerScore}`;
 }
 
-function showGameWin(playerScore, computerScore) {
-  console.log(`You won the most rounds! `+
-      `You: ${playerScore} | Computer: ${computerScore}`);
+function showGameWin(playerScore, computerScore, message) {
+  message.textContent = `You won the most rounds! `+
+      `You: ${playerScore} | Computer: ${computerScore}`;
 }
 
-function showGameLoss(playerScore, computerScore) {
-  console.log(`You lost the most rounds! `+
-      `You: ${playerScore} | Computer: ${computerScore}`);
+function showGameLoss(playerScore, computerScore, message) {
+  message.textContent = `You lost the most rounds! `+
+      `You: ${playerScore} | Computer: ${computerScore}`;
 }
       
-function checkRoundWinner(userSelection, computerSelection, roundResult) {
+function checkRoundWinner(userSelection, computerSelection, roundResult, resultMessage) {
   let winner = "";
 
   if (roundResult === "win") {
-    showRoundWin(userSelection, computerSelection);
+    showRoundWin(userSelection, computerSelection, resultMessage);
     winner = "player";
   } else if (roundResult === "loss") {
-    showRoundLoss(userSelection, computerSelection);
+    showRoundLoss(userSelection, computerSelection, resultMessage);
     winner = "computer";
   } else if (roundResult === "tie") {
-    showRoundTie(userSelection);
+    showRoundTie(userSelection, resultMessage);
     winner = "tie";
   } else {
     showInvalidMessage();
@@ -100,37 +95,79 @@ function checkRoundWinner(userSelection, computerSelection, roundResult) {
   return winner;
 }
 
-function checkOverallWinner(playerScore, computerScore) {
+function checkOverallWinner(playerScore, computerScore, message) {
   if (playerScore === computerScore) {
-     showGameTie(playerScore, computerScore);
+     showGameTie(playerScore, computerScore, message);
   } else if (playerScore > computerScore) {
-    showGameWin(playerScore, computerScore);
+    showGameWin(playerScore, computerScore, message);
   } else {
-    showGameLoss(playerScore, computerScore);
+    showGameLoss(playerScore, computerScore, message);
   }
 }
 
-/*function playGame() {
+function playRound(userSelection, resultMessage) {
+  let computerSelection = getComputerSelection();
+  let result = getRoundResult(userSelection, computerSelection);
+  let winner = checkRoundWinner(userSelection, computerSelection, result, resultMessage);
+  return winner;
+}
+
+function playGame() {
   let playerScore = 0;
-  let computerScore = 0;
+  let compScore = 0;
+  let drawCount = 0;
 
-  for (let i = 0; i < 5; i++) {
-    let userSelection = getPlayerSelection();
-    let compSelection = getComputerSelection();
-    let result = getRoundResult(userSelection, compSelection);
-    let winner = checkRoundWinner(userSelection, compSelection, result);
-              
-    if (winner === "player") {
-      playerScore++;
-    } else if (winner === "computer") {
-      computerScore++;
-    } else if (winner === "tie") {
-      continue;
-    } else {
-      i--; //invalid user input, repeat round
-    }
-  }
-  checkOverallWinner(playerScore, computerScore);
+  const resultDisplay = document.querySelector('.result');
+  const resultMessage = document.createElement('h3');
+  resultMessage.textContent = "Choose a move below!";
+
+  const choiceDisplay = document.querySelector('.choice');
+  const choiceMessage = document.createElement('h3');
+  choiceMessage.textContent = "Choose your move";
+
+  const userContainer = document.querySelector('.userContainer');
+  const userScore = document.querySelector('.playerscore');
+  userScore.textContent = playerScore;
+
+  const computerContainer = document.querySelector('.computerContainer');
+  const computerScore = document.querySelector('.computerscore');
+  computerScore.textContent = compScore;
+
+  const drawContainer = document.querySelector('.drawContainer');
+  const draws = document.querySelector('.draws');
+  draws.textContent = drawCount;
+
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      let result = playRound(button.className, resultMessage);
+      if (result === 'player') {
+        playerScore++;
+        userScore.textContent = playerScore;
+      } else if (result === 'computer') {
+        compScore++;
+        computerScore.textContent = compScore;
+      } else {
+        drawCount++;
+        draws.textContent = drawCount;
+      }
+      if (playerScore === 5 || compScore === 5) {
+        buttons.forEach((button) => button.style.cssText = 'display: none');
+        const reload = document.querySelector('.reload');
+        reload.style.cssText = "display: flex";
+        reload.addEventListener('click', () => {
+          location.reload();
+        });
+        checkOverallWinner(playerScore, compScore, choiceMessage);
+      }
+    });
+  });
+
+  resultDisplay.appendChild(resultMessage);
+  choiceDisplay.appendChild(choiceMessage);
+  userContainer.appendChild(userScore);
+  computerContainer.appendChild(computerScore);
+  drawContainer.appendChild(draws);
 }
 
-playGame();*/
+playGame();
